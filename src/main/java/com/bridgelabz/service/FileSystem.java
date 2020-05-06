@@ -1,11 +1,9 @@
 package com.bridgelabz.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class FileSystem {
@@ -24,8 +22,7 @@ public class FileSystem {
         mapper.writeValue(file, list);
     }
 
-    public static <T> List<T> readFile(File file) throws IOException {
-        return mapper.readValue(file, new TypeReference<ArrayList<T>>() {
-        });
+    public static <T> List<T> readFile(File file, Class<?> target) throws IOException, ClassNotFoundException {
+        return mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, Class.forName(target.getName())));
     }
 }
