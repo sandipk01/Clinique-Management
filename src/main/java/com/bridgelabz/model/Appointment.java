@@ -1,10 +1,11 @@
 package com.bridgelabz.model;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Appointment {
+    private int id;
     private int doctorId;
     private Date date;
-    private ArrayList<Integer> patientIds = new ArrayList<>();
+    private List<Patient> patients;
 }
