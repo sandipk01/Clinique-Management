@@ -2,20 +2,21 @@ package com.bridgelabz.model;
 
 import com.bridgelabz.enums.Availability;
 
+import java.util.Objects;
+
 public class Doctor {
     private int id;
     private String name;
     private String specialization;
     private Availability availability;
 
-    public Doctor(int id, String name, String specialization, Availability availability) {
-        this.id = id;
+    public Doctor(String name, String specialization, Availability availability) {
         this.name = name;
         this.specialization = specialization;
         this.availability = availability;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -31,6 +32,10 @@ public class Doctor {
         return availability;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "id='" + id + " " +
@@ -38,4 +43,5 @@ public class Doctor {
                 "specialization='" + specialization + " " +
                 "availability=" + availability;
     }
+
 }
