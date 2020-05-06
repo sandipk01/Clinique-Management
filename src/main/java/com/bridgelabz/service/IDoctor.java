@@ -1,4 +1,4 @@
 package com.bridgelabz.service;
 
-public interface IFile {
+public interface IDoctor {
 }
