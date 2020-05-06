@@ -2,9 +2,8 @@ package com.bridgelabz.test;
 
 import com.bridgelabz.enums.Availability;
 import com.bridgelabz.model.Doctor;
-import com.bridgelabz.service.DoctorService;
-import com.bridgelabz.service.FileSystem;
-import com.bridgelabz.service.IDoctor;
+import com.bridgelabz.model.Patient;
+import com.bridgelabz.service.*;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,17 +13,27 @@ import java.io.IOException;
 public class CliniqueManagementTest {
 
     private IDoctor doctorService;
+    private IPatient patientService;
 
     @Before
     public void setUP() {
         doctorService = new DoctorService();
+        patientService = new PatientService();
     }
 
     @Test
-    public void givenDoctorDetails_WhenAddingToJson_ThenShouldReturnTotalEntry() throws IOException {
-        int oldSize = (doctorService.getFile().length() == 0) ? 0 : FileSystem.readFile(doctorService.getFile()).size();
+    public void givenDoctorDetails_WhenAddingToJson_ThenShouldReturnTotalEntry() throws IOException, ClassNotFoundException {
+        int oldSize = (doctorService.getFile().length() == 0) ? 0 : FileSystem.readFile(doctorService.getFile(), Doctor.class).size();
         Doctor doctor1 = new Doctor("Mangesh", "Dentist", Availability.AM);
         doctorService.addDoctor(doctor1);
-        Assert.assertEquals(oldSize + 1, FileSystem.readFile(doctorService.getFile()).size());
+        Assert.assertEquals(oldSize + 1, FileSystem.readFile(doctorService.getFile(), Doctor.class).size());
+    }
+
+    @Test
+    public void givenPatientDetails_WhenAddingToJson_ThenShouldReturnTotalEntry() throws IOException, ClassNotFoundException {
+        int oldSize = (patientService.getFile().length() == 0) ? 0 : FileSystem.readFile(patientService.getFile(), Patient.class).size();
+        Patient patient1 = new Patient("roit", "9988568562", 45);
+        patientService.addPatient(patient1);
+        Assert.assertEquals(oldSize + 1, FileSystem.readFile(patientService.getFile(), Patient.class).size());
     }
 }

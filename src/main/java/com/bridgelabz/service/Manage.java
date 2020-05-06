@@ -11,7 +11,7 @@ public class Manage {
 
     public <T> void printEntry(List<T> list) {
         list.forEach(s -> System.out.println(s.toString().replace("{", "")
-                .replace("}", "").replace(",","  ")));
+                .replace("}", "").replace(",", "  ")));
     }
 
 }

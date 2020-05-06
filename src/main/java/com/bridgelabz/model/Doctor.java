@@ -2,7 +2,7 @@ package com.bridgelabz.model;
 
 import com.bridgelabz.enums.Availability;
 
-import java.util.Objects;
+import javax.print.Doc;
 
 public class Doctor {
     private int id;
@@ -10,13 +10,17 @@ public class Doctor {
     private String specialization;
     private Availability availability;
 
+    public Doctor(){
+
+    }
+
     public Doctor(String name, String specialization, Availability availability) {
         this.name = name;
         this.specialization = specialization;
         this.availability = availability;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 

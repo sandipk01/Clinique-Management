@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Appointment {
     private int id;
-    private int doctorId;
     private Date date;
+    private int doctorId;
     private List<Patient> patients;
 }
