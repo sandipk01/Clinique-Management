@@ -1,4 +1,4 @@
 package com.bridgelabz.service;
 
-public class Appointment {
+public class AppointmentService extends Manage {
 }
