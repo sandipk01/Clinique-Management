@@ -1,4 +1,5 @@
 package com.bridgelabz.service;
 
-public class Patient {
+public class PatientService extends Manage {
+
 }
