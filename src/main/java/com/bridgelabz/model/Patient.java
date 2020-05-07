@@ -1,17 +1,18 @@
 package com.bridgelabz.model;
 
+import java.util.Objects;
+
 public class Patient {
     private int id;
     private String name;
     private String phone;
-    private long age;
+    private int age;
 
-    public Patient(){
+    public Patient() {
 
     }
 
-    public Patient(int id, String name, String phone, long age) {
-        this.id = id;
+    public Patient(String name, String phone, int age) {
         this.name = name;
         this.phone = phone;
         this.age = age;
@@ -29,7 +30,7 @@ public class Patient {
         return phone;
     }
 
-    public long getAge() {
+    public int getAge() {
         return age;
     }
 
@@ -46,4 +47,5 @@ public class Patient {
                 ", age=" + age +
                 '}';
     }
+
 }
