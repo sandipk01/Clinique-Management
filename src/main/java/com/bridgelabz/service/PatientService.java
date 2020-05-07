@@ -1,6 +1,7 @@
 package com.bridgelabz.service;
 
 import com.bridgelabz.model.Patient;
+import com.bridgelabz.util.FileSystem;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,4 +36,20 @@ public class PatientService extends Manage implements IPatient {
     public File getFile() {
         return file;
     }
+
+    @Override
+    public List<Patient> searchByName(String name) throws IOException, ClassNotFoundException {
+        patientList = FileSystem.readFile(file, Patient.class);
+        List<Patient> searchList = search(patientList, Patient::getName, name);
+        return searchList;
+    }
+
+    @Override
+    public List<Patient> searchByPhone(String phone) throws IOException, ClassNotFoundException {
+        patientList = FileSystem.readFile(file, Patient.class);
+        List<Patient> searchList = search(patientList, Patient::getPhone, phone);
+        return searchList;
+    }
+
+
 }
