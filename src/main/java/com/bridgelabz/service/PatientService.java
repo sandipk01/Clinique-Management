@@ -33,6 +33,6 @@ public class PatientService extends Manage implements IPatient {
 
     @Override
     public File getFile() {
-        return null;
+        return file;
     }
 }
