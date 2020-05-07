@@ -1,5 +1,6 @@
 package com.bridgelabz.service;
 
+import com.bridgelabz.enums.Availability;
 import com.bridgelabz.model.Doctor;
 
 import java.io.File;
@@ -19,4 +20,6 @@ public interface IDoctor {
     List<Doctor> searchById(int id) throws IOException, ClassNotFoundException;
 
     List<Doctor> searchBySpecialization(String specialization) throws IOException, ClassNotFoundException;
+
+    List<Doctor> searchByAvailability(Availability specialization) throws IOException, ClassNotFoundException;
 }
