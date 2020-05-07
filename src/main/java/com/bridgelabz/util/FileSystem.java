@@ -1,4 +1,4 @@
-package com.bridgelabz.service;
+package com.bridgelabz.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
