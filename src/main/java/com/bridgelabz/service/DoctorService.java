@@ -13,6 +13,7 @@ public class DoctorService extends Manage implements IDoctor {
 
     private List<Doctor> doctorList;
 
+
     @Override
     public void addDoctor(Doctor doctor) throws IOException, ClassNotFoundException {
         if (file.length() == 0) {
@@ -36,5 +37,11 @@ public class DoctorService extends Manage implements IDoctor {
         return file;
     }
 
+    @Override
+    public List<Doctor> searchByName(String name) throws IOException, ClassNotFoundException {
+        doctorList = FileSystem.readFile(file, Doctor.class);
+        List<Doctor> searchList = search(doctorList, Doctor::getName, name);
+        return searchList;
+    }
 
 }
