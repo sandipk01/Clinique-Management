@@ -4,6 +4,7 @@ import com.bridgelabz.model.Doctor;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public interface IDoctor {
 
@@ -12,4 +13,6 @@ public interface IDoctor {
     void printDoctor() throws IOException, ClassNotFoundException;
 
     File getFile();
+
+    List<Doctor> searchByName(String name) throws IOException, ClassNotFoundException;
 }
