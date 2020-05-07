@@ -1,7 +1,5 @@
 package com.bridgelabz.model;
 
-import java.util.Objects;
-
 public class Patient {
     private int id;
     private String name;
