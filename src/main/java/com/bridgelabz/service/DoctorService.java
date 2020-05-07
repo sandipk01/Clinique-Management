@@ -44,4 +44,11 @@ public class DoctorService extends Manage implements IDoctor {
         return searchList;
     }
 
+    @Override
+    public List<Doctor> searchById(int id) throws IOException, ClassNotFoundException {
+        doctorList = FileSystem.readFile(file, Doctor.class);
+        List<Doctor> searchList = search(doctorList, Doctor::getId, id);
+        return searchList;
+    }
+
 }
