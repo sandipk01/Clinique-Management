@@ -48,4 +48,9 @@ public class CliniqueManagementTest {
         Assert.assertEquals(2, doctorService.searchByName("Mangesh").size());
     }
 
+    @Test
+    public void givenDoctorDetails_WhenSearchById_ThenShouldReturnTotalEntry() throws IOException, ClassNotFoundException {
+       Assert.assertEquals(1, doctorService.searchById(2).size());
+    }
+
 }
