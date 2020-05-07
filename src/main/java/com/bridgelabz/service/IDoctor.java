@@ -17,4 +17,6 @@ public interface IDoctor {
     List<Doctor> searchByName(String name) throws IOException, ClassNotFoundException;
 
     List<Doctor> searchById(int id) throws IOException, ClassNotFoundException;
+
+    List<Doctor> searchBySpecialization(String specialization) throws IOException, ClassNotFoundException;
 }
