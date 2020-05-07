@@ -1,5 +1,6 @@
 package com.bridgelabz.service;
 
+import com.bridgelabz.enums.Availability;
 import com.bridgelabz.model.Doctor;
 
 import java.io.File;
@@ -58,5 +59,11 @@ public class DoctorService extends Manage implements IDoctor {
         return searchList;
     }
 
+    @Override
+    public List<Doctor> searchByAvailability(Availability availability) throws IOException, ClassNotFoundException {
+        doctorList = FileSystem.readFile(file, Doctor.class);
+        List<Doctor> searchList = search(doctorList, Doctor::getAvailability, availability);
+        return searchList;
+    }
 
 }
