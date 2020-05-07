@@ -2,6 +2,7 @@ package com.bridgelabz.service;
 
 import com.bridgelabz.enums.Availability;
 import com.bridgelabz.model.Doctor;
+import com.bridgelabz.util.FileSystem;
 
 import java.io.File;
 import java.io.IOException;
