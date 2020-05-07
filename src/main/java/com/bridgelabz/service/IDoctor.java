@@ -15,4 +15,6 @@ public interface IDoctor {
     File getFile();
 
     List<Doctor> searchByName(String name) throws IOException, ClassNotFoundException;
+
+    List<Doctor> searchById(int id) throws IOException, ClassNotFoundException;
 }
