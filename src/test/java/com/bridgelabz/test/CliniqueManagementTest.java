@@ -36,4 +36,16 @@ public class CliniqueManagementTest {
         patientService.addPatient(patient1);
         Assert.assertEquals(oldSize + 1, FileSystem.readFile(patientService.getFile(), Patient.class).size());
     }
+
+    @Test
+    public void givenDoctorDetails_WhenSearchByName_ThenShouldReturnTotalEntry() throws IOException, ClassNotFoundException {
+        Doctor doctor1 = new Doctor("Mangesh", "heart specialist", Availability.AM);
+        Doctor doctor2 = new Doctor("Ramesh", "heart specialist", Availability.PM);
+        Doctor doctor3 = new Doctor("Suresh", "brain specialist", Availability.AM);
+        doctorService.addDoctor(doctor1);
+        doctorService.addDoctor(doctor2);
+        doctorService.addDoctor(doctor3);
+        Assert.assertEquals(2, doctorService.searchByName("Mangesh").size());
+    }
+
 }
