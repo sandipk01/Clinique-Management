@@ -53,4 +53,8 @@ public class CliniqueManagementTest {
        Assert.assertEquals(1, doctorService.searchById(2).size());
     }
 
+    @Test
+    public void givenDoctorDetails_WhenSearchBySpecialization_ThenShouldReturnTotalEntry() throws IOException, ClassNotFoundException {
+        Assert.assertEquals(1, doctorService.searchBySpecialization("brain specialist").size());
+    }
 }
