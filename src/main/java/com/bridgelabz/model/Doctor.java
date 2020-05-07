@@ -2,7 +2,7 @@ package com.bridgelabz.model;
 
 import com.bridgelabz.enums.Availability;
 
-import javax.print.Doc;
+import java.util.Objects;
 
 public class Doctor {
     private int id;
@@ -42,10 +42,11 @@ public class Doctor {
 
     @Override
     public String toString() {
-        return "id='" + id + " " +
-                "name='" + name + " " +
-                "specialization='" + specialization + " " +
+        return "id=" + id + " " +
+                "name=" + name + " " +
+                "specialization=" + specialization + " " +
                 "availability=" + availability;
     }
+
 
 }
