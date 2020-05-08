@@ -1,6 +1,5 @@
 package com.bridgelabz.service;
 
-import com.bridgelabz.enums.Availability;
 import com.bridgelabz.model.Appointment;
 
 import java.io.File;
@@ -12,11 +11,4 @@ public interface IClinique {
 
     File getFile();
 
-    boolean checkDate(String date,int doctorId) throws IOException, ClassNotFoundException;
-
-    boolean checkAvailabilityAtPm(String date, int doctorId) throws IOException, ClassNotFoundException;
-
-    boolean checkAvailabilityAtAm(String date, int doctorId) throws IOException, ClassNotFoundException;
-
-    Availability getDoctorAvailabilityById(int doctorId) throws IOException, ClassNotFoundException;
 }
