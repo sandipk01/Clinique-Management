@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class CliniqueService extends Manage implements IClinique {
 
@@ -18,6 +19,8 @@ public class CliniqueService extends Manage implements IClinique {
     private List<Appointment> appointmentList;
 
     private IDoctor doctorService;
+
+    Scanner scanner=new Scanner(System.in);
 
     public CliniqueService() {
         doctorService = new DoctorService();
@@ -30,79 +33,60 @@ public class CliniqueService extends Manage implements IClinique {
     @Override
     public boolean takeAppointment(Appointment appointment) throws IOException, ClassNotFoundException {
         if (file.length() == 0) {
-            appointment.setId(1);
-            appointmentList = new ArrayList<>();
-            FileSystem.saveFile(file, addEntry(appointmentList, appointment));
-            return true;
+            if (getDoctorAvailabilityById(appointment.getDoctorId()) == appointment.getAvailability()
+                    || getDoctorAvailabilityById(appointment.getDoctorId()) == Availability.BOTH) {
+                appointment.setId(1);
+                appointmentList = new ArrayList<>();
+            } else {
+                return false;
+            }
         } else {
             appointmentList = FileSystem.readFile(file, Appointment.class);
-            if (checkDate(appointment.getDate(), appointment.getDoctorId())) {
+            if (checkAvailability(appointment)) {
                 appointment.setId(appointmentList.size() + 1);
-                if (appointment.getAvailability() == Availability.AM) {
-                    if (checkAvailabilityAtAm(appointment.getDate(), appointment.getDoctorId()))
-                        appointment.setAvailability(Availability.AM);
-                    else
-                        appointment.setAvailability(Availability.PM);
-                } else {
-                    if (checkAvailabilityAtPm(appointment.getDate(), appointment.getDoctorId()))
-                        appointment.setAvailability(Availability.PM);
-                    else
-                        appointment.setAvailability(Availability.AM);
-                }
-                FileSystem.saveFile(file, addEntry(appointmentList, appointment));
-                return true;
             } else {
                 return false;
             }
         }
-
+        FileSystem.saveFile(file, addEntry(appointmentList, appointment));
+        return true;
     }
 
-    @Override
-    public boolean checkDate(String date, int doctorId) throws IOException, ClassNotFoundException {
-        appointmentList = FileSystem.readFile(file, Appointment.class);
-        Availability availability = getDoctorAvailabilityById(doctorId);
-        long count = appointmentList.stream()
-                .filter(d -> d.getDate().equals(date) && d.getDoctorId() == doctorId && availability != Availability.BOTH)
-                .count();
-        long count1 = appointmentList.stream()
-                .filter(d -> d.getDate().equals(date) && d.getDoctorId() == doctorId && availability == Availability.BOTH)
-                .count();
-        return (count >= 5 || count1 >= 10) ? false : true;
+    private boolean checkAvailability(Appointment appointment) throws IOException, ClassNotFoundException {
+        if (getDoctorAvailabilityById(appointment.getDoctorId()) == appointment.getAvailability()
+                || getDoctorAvailabilityById(appointment.getDoctorId()) == Availability.BOTH) {
+            System.out.println("doctor not Available");
+            if (checkPatientsPerDay(appointment.getDate(), appointment.getDoctorId()))
+                return true;
+            else
+                System.out.println("Set Another Date");
+            String date=scanner.next();
+                setAppointmentDate(appointment,date);
+            return false;
+        } else {
+            return false;
+        }
     }
 
-    @Override
-    public boolean checkAvailabilityAtAm(String date, int doctorId) throws IOException, ClassNotFoundException {
+    private boolean checkPatientsPerDay(String date, int doctorId) throws IOException, ClassNotFoundException {
         appointmentList = FileSystem.readFile(file, Appointment.class);
-        Availability availability = getDoctorAvailabilityById(doctorId);
         long count = appointmentList.stream()
-                .filter(d -> d.getDate().equals(date) && d.getDoctorId() == doctorId && availability == Availability.BOTH && d.getAvailability() == Availability.AM)
+                .filter(d -> d.getDate().equals(date) && d.getDoctorId() == doctorId)
                 .count();
         return (count >= 5) ? false : true;
     }
 
-    @Override
-    public boolean checkAvailabilityAtPm(String date, int doctorId) throws IOException, ClassNotFoundException {
-        appointmentList = FileSystem.readFile(file, Appointment.class);
-        Availability availability = getDoctorAvailabilityById(doctorId);
-        long count = appointmentList.stream()
-                .filter(d -> d.getDate().equals(date) && d.getDoctorId() == doctorId && availability == Availability.BOTH && d.getAvailability() == Availability.AM)
-                .count();
-        return (count >= 5) ? false : true;
-    }
-
-    @Override
-    public Availability getDoctorAvailabilityById(int doctorId) throws IOException, ClassNotFoundException {
+    private Availability getDoctorAvailabilityById(int doctorId) throws IOException, ClassNotFoundException {
         List<Doctor> doctorList = FileSystem.readFile(doctorService.getFile(), Doctor.class);
         Doctor doctor = doctorList.stream()
                 .filter((doctor1) -> doctor1.getId() == doctorId).findFirst().get();
         return doctor.getAvailability();
     }
 
-    public void setAppointmentDate(Appointment appointment, String date) {
+    private void setAppointmentDate(Appointment appointment, String date) throws IOException, ClassNotFoundException {
         appointment.setDate(date);
+        takeAppointment(appointment);
     }
-
 
 }
 
