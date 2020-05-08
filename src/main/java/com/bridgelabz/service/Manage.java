@@ -8,18 +8,18 @@ import java.util.stream.Collectors;
 
 public class Manage {
 
-    public static <T> List<T> addEntry(List<T> list, T obj) {
+    public <T> List<T> addEntry(List<T> list, T obj) {
         list.add(obj);
         return list;
     }
 
-    public static <T> void printEntry(List<T> list) {
+    public <T> void printEntry(List<T> list) {
         list.forEach(s -> System.out.println(s.toString().replace("{", "")
                 .replace("}", "").replace(",", "  ")));
     }
 
-    public static <T,E> List<T> search(Collection<T> collectionObject,
-                                     Function<T, Object> searchPropertyAccessor, E searchText) {
+    public <T, E> List<T> search(Collection<T> collectionObject,
+                                 Function<T, Object> searchPropertyAccessor, E searchText) {
 
         List<T> result = collectionObject.stream()
                 .filter(item -> Objects.equals(searchPropertyAccessor.apply(item), searchText))
