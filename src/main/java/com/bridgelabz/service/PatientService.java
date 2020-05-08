@@ -39,17 +39,17 @@ public class PatientService extends Manage implements IPatient {
 
     @Override
     public List<Patient> searchByName(String name) throws IOException, ClassNotFoundException {
-        patientList = FileSystem.readFile(file, Patient.class);
-        List<Patient> searchList = search(patientList, Patient::getName, name);
-        return searchList;
+        return search(FileSystem.readFile(file, Patient.class), Patient::getName, name);
     }
 
     @Override
     public List<Patient> searchByPhone(String phone) throws IOException, ClassNotFoundException {
-        patientList = FileSystem.readFile(file, Patient.class);
-        List<Patient> searchList = search(patientList, Patient::getPhone, phone);
-        return searchList;
+        return search(FileSystem.readFile(file, Patient.class), Patient::getPhone, phone);
     }
 
+    @Override
+    public List<Patient> searchById(int id) throws IOException, ClassNotFoundException {
+        return search(FileSystem.readFile(file, Patient.class), Patient::getId, id);
+    }
 
 }
