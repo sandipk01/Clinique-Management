@@ -17,4 +17,6 @@ public interface IPatient {
     List<Patient> searchByName(String name) throws IOException, ClassNotFoundException;
 
     List<Patient> searchByPhone(String phone) throws IOException, ClassNotFoundException;
+
+    List<Patient> searchById(int id) throws IOException, ClassNotFoundException;
 }
