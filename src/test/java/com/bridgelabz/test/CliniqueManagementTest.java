@@ -107,12 +107,14 @@ public class CliniqueManagementTest {
 
     @Test
     public void givenAppointmentDetails_WhenTakeAppointment_ThenShouldReturnTotalEntry() throws IOException, ClassNotFoundException {
-        Appointment appointment1=new Appointment("9-5-20",2,1,Availability.PM);
-        Appointment appointment2=new Appointment("9-5-20",2,5,Availability.AM);
+        Appointment appointment1=new Appointment("9-5-20",1,1,Availability.AM);
+        Appointment appointment2=new Appointment("9-5-20",1,5,Availability.AM);
+        Appointment appointment3=new Appointment("9-5-20",1,1,Availability.AM);
         cliniqueService.takeAppointment(appointment1);
         cliniqueService.takeAppointment(appointment2);
-        List<Appointment> appointmentsList=FileSystem.readFile(cliniqueService.getFile(),Appointment.class);
-        Assert.assertEquals(2,appointmentsList.size());
+        cliniqueService.takeAppointment(appointment3);
+        List<Appointment> appointmentsList = FileSystem.readFile(cliniqueService.getFile(), Appointment.class);
+        Assert.assertEquals(3, appointmentsList.size());
     }
 
 }
