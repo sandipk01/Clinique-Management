@@ -1,6 +1,7 @@
 package com.bridgelabz.test;
 
 import com.bridgelabz.enums.Availability;
+import com.bridgelabz.exception.CliniqueManagmentException;
 import com.bridgelabz.model.Appointment;
 import com.bridgelabz.model.Doctor;
 import com.bridgelabz.model.Patient;
@@ -106,7 +107,7 @@ public class CliniqueManagementTest {
     }
 
     @Test
-    public void givenAppointmentDetails_WhenTakeAppointment_ThenShouldReturnTotalEntry() throws IOException, ClassNotFoundException {
+    public void givenAppointmentDetails_WhenTakeAppointment_ThenShouldReturnTotalEntry() throws IOException, ClassNotFoundException, CliniqueManagmentException {
         Appointment appointment1=new Appointment("9-5-20",1,1,Availability.AM);
         Appointment appointment2=new Appointment("9-5-20",1,5,Availability.AM);
         Appointment appointment3=new Appointment("9-5-20",1,1,Availability.AM);
