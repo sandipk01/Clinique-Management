@@ -154,4 +154,9 @@ public class CliniqueManagementTest {
         Assert.assertEquals(4, cliniqueService.getMostPopularDoctor());
     }
 
+    @Test
+    public void givenAppointmentDetails_WhenSearchPopularSpecialization_ThenShouldReturnSpecialization() throws IOException, ClassNotFoundException {
+        Assert.assertEquals("Dentist", cliniqueService.getMostPopularSpecialization());
+    }
+
 }
