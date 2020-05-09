@@ -1,6 +1,7 @@
 package com.bridgelabz.service;
 
 import com.bridgelabz.enums.Availability;
+import com.bridgelabz.exception.CliniqueManagmentException;
 import com.bridgelabz.model.Appointment;
 import com.bridgelabz.model.Doctor;
 import com.bridgelabz.util.FileSystem;
@@ -20,8 +21,6 @@ public class CliniqueService extends Manage implements IClinique {
 
     private IDoctor doctorService;
 
-    Scanner scanner=new Scanner(System.in);
-
     public CliniqueService() {
         doctorService = new DoctorService();
     }
@@ -31,7 +30,7 @@ public class CliniqueService extends Manage implements IClinique {
     }
 
     @Override
-    public boolean takeAppointment(Appointment appointment) throws IOException, ClassNotFoundException {
+    public boolean takeAppointment(Appointment appointment) throws IOException, ClassNotFoundException, CliniqueManagmentException {
         if (file.length() == 0) {
             if (getDoctorAvailabilityById(appointment.getDoctorId()) == appointment.getAvailability()
                     || getDoctorAvailabilityById(appointment.getDoctorId()) == Availability.BOTH) {
@@ -52,19 +51,15 @@ public class CliniqueService extends Manage implements IClinique {
         return true;
     }
 
-    private boolean checkAvailability(Appointment appointment) throws IOException, ClassNotFoundException {
+    private boolean checkAvailability(Appointment appointment) throws IOException, ClassNotFoundException, CliniqueManagmentException {
         if (getDoctorAvailabilityById(appointment.getDoctorId()) == appointment.getAvailability()
                 || getDoctorAvailabilityById(appointment.getDoctorId()) == Availability.BOTH) {
-            System.out.println("doctor not Available");
             if (checkPatientsPerDay(appointment.getDate(), appointment.getDoctorId()))
                 return true;
             else
-                System.out.println("Set Another Date");
-            String date=scanner.next();
-                setAppointmentDate(appointment,date);
-            return false;
+                throw new CliniqueManagmentException("Doctor appointment is full for the day.", CliniqueManagmentException.TypeOfException.APPOINTMENT_FULL);
         } else {
-            return false;
+            throw new CliniqueManagmentException("Doctor is not available at this Time", CliniqueManagmentException.TypeOfException.INVALID_AVAILABILITY);
         }
     }
 
@@ -82,12 +77,6 @@ public class CliniqueService extends Manage implements IClinique {
                 .filter((doctor1) -> doctor1.getId() == doctorId).findFirst().get();
         return doctor.getAvailability();
     }
-
-    private void setAppointmentDate(Appointment appointment, String date) throws IOException, ClassNotFoundException {
-        appointment.setDate(date);
-        takeAppointment(appointment);
-    }
-
 }
 
 
