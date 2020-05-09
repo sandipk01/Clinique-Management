@@ -7,6 +7,7 @@ import com.bridgelabz.model.Doctor;
 import com.bridgelabz.model.Patient;
 import com.bridgelabz.service.*;
 import com.bridgelabz.util.FileSystem;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -111,22 +112,28 @@ public class CliniqueManagementTest {
         Appointment appointment1 = new Appointment("9-5-20", 1, 1, Availability.AM);
         Appointment appointment2 = new Appointment("9-5-20", 1, 5, Availability.AM);
         Appointment appointment3 = new Appointment("9-5-20", 1, 1, Availability.AM);
+        Appointment appointment4 = new Appointment("9-5-20", 4, 1, Availability.AM);
+        Appointment appointment5 = new Appointment("9-5-20", 4, 1, Availability.AM);
+        Appointment appointment6 = new Appointment("9-5-20", 4, 1, Availability.AM);
+        Appointment appointment7 = new Appointment("9-5-20", 4, 1, Availability.AM);
+        Appointment appointment8 = new Appointment("9-5-20", 4, 1, Availability.AM);
         cliniqueService.takeAppointment(appointment1);
         cliniqueService.takeAppointment(appointment2);
         cliniqueService.takeAppointment(appointment3);
+        cliniqueService.takeAppointment(appointment4);
+        cliniqueService.takeAppointment(appointment5);
+        cliniqueService.takeAppointment(appointment6);
+        cliniqueService.takeAppointment(appointment7);
+        cliniqueService.takeAppointment(appointment8);
         List<Appointment> appointmentsList = FileSystem.readFile(cliniqueService.getFile(), Appointment.class);
-        Assert.assertEquals(3, appointmentsList.size());
+        Assert.assertEquals(8, appointmentsList.size());
     }
 
     @Test
     public void givenAppointmentDetails_WhenAvailabilityIsWrong_ThenShouldThrowInvalidAvailabilityException() throws IOException, ClassNotFoundException {
         try {
-            Appointment appointment1 = new Appointment("9-5-20", 1, 1, Availability.AM);
-            Appointment appointment2 = new Appointment("9-5-20", 1, 5, Availability.AM);
-            Appointment appointment3 = new Appointment("9-5-20", 1, 1, Availability.PM);
-            cliniqueService.takeAppointment(appointment1);
+            Appointment appointment2 = new Appointment("9-5-20", 1, 1, Availability.PM);
             cliniqueService.takeAppointment(appointment2);
-            cliniqueService.takeAppointment(appointment3);
         } catch (CliniqueManagmentException e) {
             Assert.assertEquals(CliniqueManagmentException.TypeOfException.INVALID_AVAILABILITY, e.type);
         }
@@ -140,6 +147,11 @@ public class CliniqueManagementTest {
         } catch (CliniqueManagmentException e) {
             Assert.assertEquals(CliniqueManagmentException.TypeOfException.APPOINTMENT_FULL, e.type);
         }
+    }
+
+    @Test
+    public void givenAppointmentDetails_WhenSearchPopularDoctor_ThenShouldReturnDoctorId() throws IOException, ClassNotFoundException {
+        Assert.assertEquals(4, cliniqueService.getMostPopularDoctor());
     }
 
 }
