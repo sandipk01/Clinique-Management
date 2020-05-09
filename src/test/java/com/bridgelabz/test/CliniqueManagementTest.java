@@ -108,14 +108,28 @@ public class CliniqueManagementTest {
 
     @Test
     public void givenAppointmentDetails_WhenTakeAppointment_ThenShouldReturnTotalEntry() throws IOException, ClassNotFoundException, CliniqueManagmentException {
-        Appointment appointment1=new Appointment("9-5-20",1,1,Availability.AM);
-        Appointment appointment2=new Appointment("9-5-20",1,5,Availability.AM);
-        Appointment appointment3=new Appointment("9-5-20",1,1,Availability.AM);
+        Appointment appointment1 = new Appointment("9-5-20", 1, 1, Availability.AM);
+        Appointment appointment2 = new Appointment("9-5-20", 1, 5, Availability.AM);
+        Appointment appointment3 = new Appointment("9-5-20", 1, 1, Availability.AM);
         cliniqueService.takeAppointment(appointment1);
         cliniqueService.takeAppointment(appointment2);
         cliniqueService.takeAppointment(appointment3);
         List<Appointment> appointmentsList = FileSystem.readFile(cliniqueService.getFile(), Appointment.class);
         Assert.assertEquals(3, appointmentsList.size());
+    }
+
+    @Test
+    public void givenAppointmentDetails_WhenAvailabilityIsWrong_ThenShouldThrowInvalidAvailabilityException() throws IOException, ClassNotFoundException {
+        try {
+            Appointment appointment1 = new Appointment("9-5-20", 1, 1, Availability.AM);
+            Appointment appointment2 = new Appointment("9-5-20", 1, 5, Availability.AM);
+            Appointment appointment3 = new Appointment("9-5-20", 1, 1, Availability.PM);
+            cliniqueService.takeAppointment(appointment1);
+            cliniqueService.takeAppointment(appointment2);
+            cliniqueService.takeAppointment(appointment3);
+        } catch (CliniqueManagmentException e) {
+           Assert.assertEquals(CliniqueManagmentException.TypeOfException.INVALID_AVAILABILITY,e.type);
+        }
     }
 
 }
