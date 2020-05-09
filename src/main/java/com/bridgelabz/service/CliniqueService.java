@@ -87,9 +87,9 @@ public class CliniqueService extends Manage implements IClinique {
     @Override
     public void printReport(int doctorId) throws IOException, ClassNotFoundException {
         List<Appointment> reportList = FileSystem.readFile(this.getFile(), Appointment.class);
-        for (Appointment report : reportList)
-            if (report.getDoctorId() == doctorId)
-                System.out.println("Patient Id: " + report.getPatientId() + " " + "Patient Name: " + getPatientNameById(report.getPatientId()));
+        for (Appointment appointment : reportList)
+            if (appointment.getDoctorId() == doctorId)
+                System.out.println(getPatientNameById(appointment.getPatientId()));
     }
 
     private String getPatientNameById(int patientId) throws IOException, ClassNotFoundException {
