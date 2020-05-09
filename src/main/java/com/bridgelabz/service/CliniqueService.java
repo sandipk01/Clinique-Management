@@ -34,7 +34,7 @@ public class CliniqueService extends Manage implements IClinique {
         return file;
     }
 
-
+    //method for taking appointment
     @Override
     public boolean takeAppointment(Appointment appointment) throws IOException, ClassNotFoundException, CliniqueManagmentException {
         if (file.length() == 0) {
@@ -57,6 +57,7 @@ public class CliniqueService extends Manage implements IClinique {
         return true;
     }
 
+    //Method for checking doctor availability
     private boolean checkAvailability(Appointment appointment) throws IOException, ClassNotFoundException, CliniqueManagmentException {
         if (getDoctorAvailabilityById(appointment.getDoctorId()) == appointment.getAvailability()
                 || getDoctorAvailabilityById(appointment.getDoctorId()) == Availability.BOTH) {
@@ -69,6 +70,7 @@ public class CliniqueService extends Manage implements IClinique {
         }
     }
 
+    //Method for checking how many patients are having doctors per day
     private boolean checkPatientsPerDay(String date, int doctorId) throws IOException, ClassNotFoundException {
         appointmentList = FileSystem.readFile(file, Appointment.class);
         long count = appointmentList.stream()
@@ -77,6 +79,7 @@ public class CliniqueService extends Manage implements IClinique {
         return (count >= 5) ? false : true;
     }
 
+    //Get doctor availability by doctor id
     private Availability getDoctorAvailabilityById(int doctorId) throws IOException, ClassNotFoundException {
         List<Doctor> doctorList = FileSystem.readFile(doctorService.getFile(), Doctor.class);
         Doctor doctor = doctorList.stream()
@@ -84,6 +87,7 @@ public class CliniqueService extends Manage implements IClinique {
         return doctor.getAvailability();
     }
 
+    //print patient report by doctor id
     @Override
     public void printReport(int doctorId) throws IOException, ClassNotFoundException {
         List<Appointment> reportList = FileSystem.readFile(this.getFile(), Appointment.class);
@@ -92,6 +96,7 @@ public class CliniqueService extends Manage implements IClinique {
                 System.out.println(getPatientNameById(appointment.getPatientId()));
     }
 
+    //Get patient name by id
     private String getPatientNameById(int patientId) throws IOException, ClassNotFoundException {
         List<Patient> doctorList = FileSystem.readFile(patientService.getFile(), Patient.class);
         Patient patient = doctorList.stream()
@@ -99,6 +104,7 @@ public class CliniqueService extends Manage implements IClinique {
         return patient.getName();
     }
 
+    //Get most popular doctor
     @Override
     public int getMostPopularDoctor() throws IOException, ClassNotFoundException {
         List<Appointment> doctorList = FileSystem.readFile(this.getFile(), Appointment.class);
@@ -110,11 +116,13 @@ public class CliniqueService extends Manage implements IClinique {
                 .map(s -> s.getKey().intValue()).get();
     }
 
+    //get most popular specialization
     @Override
     public String getMostPopularSpecialization() throws IOException, ClassNotFoundException {
         return getSpecializationByDoctorId(getMostPopularDoctor());
     }
 
+    //Get Specialization by doctor id
     private String getSpecializationByDoctorId(int doctorId) throws IOException, ClassNotFoundException {
         List<Doctor> doctorList = FileSystem.readFile(doctorService.getFile(), Doctor.class);
         Doctor doctor = doctorList.stream()

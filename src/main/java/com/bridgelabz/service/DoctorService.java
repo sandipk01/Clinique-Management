@@ -16,6 +16,7 @@ public class DoctorService extends Manage implements IDoctor {
     private List<Doctor> doctorList;
 
 
+    //Method for adding doctor
     @Override
     public void addDoctor(Doctor doctor) throws IOException, ClassNotFoundException {
         if (file.length() == 0) {
@@ -28,6 +29,7 @@ public class DoctorService extends Manage implements IDoctor {
         FileSystem.saveFile(file, addEntry(doctorList, doctor));
     }
 
+    //Printing doctor
     @Override
     public void printDoctor() throws IOException, ClassNotFoundException {
         doctorList = FileSystem.readFile(file, Doctor.class);
@@ -39,6 +41,7 @@ public class DoctorService extends Manage implements IDoctor {
         return file;
     }
 
+    //Search doctor by name
     @Override
     public List<Doctor> searchByName(String name) throws IOException, ClassNotFoundException {
         doctorList = FileSystem.readFile(file, Doctor.class);
@@ -46,6 +49,7 @@ public class DoctorService extends Manage implements IDoctor {
         return searchList;
     }
 
+    //Search doctor by id
     @Override
     public List<Doctor> searchById(int id) throws IOException, ClassNotFoundException {
         doctorList = FileSystem.readFile(file, Doctor.class);
@@ -53,6 +57,7 @@ public class DoctorService extends Manage implements IDoctor {
         return searchList;
     }
 
+    //Search doctor by Specialization
     @Override
     public List<Doctor> searchBySpecialization(String specialization) throws IOException, ClassNotFoundException {
         doctorList = FileSystem.readFile(file, Doctor.class);
@@ -60,6 +65,7 @@ public class DoctorService extends Manage implements IDoctor {
         return searchList;
     }
 
+    //Search doctor by availability
     @Override
     public List<Doctor> searchByAvailability(Availability availability) throws IOException, ClassNotFoundException {
         doctorList = FileSystem.readFile(file, Doctor.class);

@@ -14,6 +14,7 @@ public class PatientService extends Manage implements IPatient {
 
     private List<Patient> patientList;
 
+    //Add Patient
     @Override
     public void addPatient(Patient patient) throws IOException, ClassNotFoundException {
         if (file.length() == 0) {
@@ -26,6 +27,7 @@ public class PatientService extends Manage implements IPatient {
         FileSystem.saveFile(file, addEntry(patientList, patient));
     }
 
+    //Print Patient
     @Override
     public void printPatient() throws IOException, ClassNotFoundException {
         patientList = FileSystem.readFile(file, Patient.class);
@@ -37,16 +39,19 @@ public class PatientService extends Manage implements IPatient {
         return file;
     }
 
+    //Search patient by name
     @Override
     public List<Patient> searchByName(String name) throws IOException, ClassNotFoundException {
         return search(FileSystem.readFile(file, Patient.class), Patient::getName, name);
     }
 
+    //search patient by phone
     @Override
     public List<Patient> searchByPhone(String phone) throws IOException, ClassNotFoundException {
         return search(FileSystem.readFile(file, Patient.class), Patient::getPhone, phone);
     }
 
+    //search patients by id
     @Override
     public List<Patient> searchById(int id) throws IOException, ClassNotFoundException {
         return search(FileSystem.readFile(file, Patient.class), Patient::getId, id);
