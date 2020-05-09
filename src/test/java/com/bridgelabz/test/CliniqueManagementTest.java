@@ -128,7 +128,17 @@ public class CliniqueManagementTest {
             cliniqueService.takeAppointment(appointment2);
             cliniqueService.takeAppointment(appointment3);
         } catch (CliniqueManagmentException e) {
-           Assert.assertEquals(CliniqueManagmentException.TypeOfException.INVALID_AVAILABILITY,e.type);
+            Assert.assertEquals(CliniqueManagmentException.TypeOfException.INVALID_AVAILABILITY, e.type);
+        }
+    }
+
+    @Test
+    public void givenAppointmentDetails_WhenAvailabilityFull_ThenShouldThrowAppointmentFullException() throws IOException, ClassNotFoundException {
+        try {
+            Appointment appointment1 = new Appointment("9-5-20", 1, 1, Availability.AM);
+            cliniqueService.takeAppointment(appointment1);
+        } catch (CliniqueManagmentException e) {
+            Assert.assertEquals(CliniqueManagmentException.TypeOfException.APPOINTMENT_FULL, e.type);
         }
     }
 
